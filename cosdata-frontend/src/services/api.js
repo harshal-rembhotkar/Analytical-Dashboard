@@ -1,58 +1,74 @@
 import axios from 'axios'
-import { metricsSummary, trendsData, tableMetrics, histogramResponse, metricsListResponse } from '../data/mockData'
+import { API_CONFIG, API_ENDPOINTS, handleApiError } from '../config/api'
 
-// Placeholder endpoints; switch to real API later
-const http = axios.create({ baseURL: '/' })
+// Configure axios instance
+const http = axios.create({ 
+  baseURL: API_CONFIG.BASE_URL,
+  timeout: API_CONFIG.TIMEOUT,
+  headers: {
+    'Content-Type': 'application/json',
+  }
+})
 
 export async function fetchMetricsSummary() {
-  // const { data } = await http.get('/api/metrics/summary')
-  // return data
-  await new Promise((r) => setTimeout(r, 300))
-  return metricsSummary
+  try {
+    const { data } = await http.get(API_ENDPOINTS.METRICS_SUMMARY)
+    return data
+  } catch (error) {
+    handleApiError(error, 'Fetch metrics summary')
+  }
 }
 
 export async function fetchTrends() {
-  // const { data } = await http.get('/api/trends')
-  await new Promise((r) => setTimeout(r, 300))
-  return trendsData
+  try {
+    const { data } = await http.get(API_ENDPOINTS.METRICS_TRENDS)
+    return data
+  } catch (error) {
+    handleApiError(error, 'Fetch trends')
+  }
 }
 
 export async function fetchTableMetrics() {
-  // const { data } = await http.get('/api/metrics')
-  await new Promise((r) => setTimeout(r, 300))
-  return tableMetrics
+  try {
+    const { data } = await http.get(API_ENDPOINTS.METRICS_TABLE)
+    return data
+  } catch (error) {
+    handleApiError(error, 'Fetch table metrics')
+  }
 }
 
-// --- MTS spec endpoints (mocked) ---
+// --- MTS spec endpoints ---
 export async function getMetricsHistogram({ start_time, interval_minutes = 60, page = 1, page_size = 24 } = {}) {
-  // const { data } = await http.get('/api/v1/metrics/timeseries/histogram', { params: { start_time, interval_minutes, page, page_size } })
-  await new Promise((r) => setTimeout(r, 300))
-  return histogramResponse(page_size)
+  try {
+    const { data } = await http.get(API_ENDPOINTS.METRICS_HISTOGRAM, { 
+      params: { start_time, interval_minutes, page, page_size } 
+    })
+    return data
+  } catch (error) {
+    handleApiError(error, 'Fetch metrics histogram')
+  }
 }
 
 export async function getMetricsList({ page = 1, page_size = 10, sort_by = 'name', sort_order = 'asc' } = {}) {
-  // const { data } = await http.get('/api/v1/metrics', { params: { page, page_size, sort_by, sort_order } })
-  await new Promise((r) => setTimeout(r, 300))
-  const res = metricsListResponse()
-  // simple client-side mock for sorting and pagination on the mock payload
-  const keyMap = { name: 'metric_name', mts_count: 'mts_count', percentage: 'percentage_of_total' }
-  const key = keyMap[sort_by] || 'metric_name'
-  const sorted = [...res.metrics].sort((a, b) => {
-    const dir = sort_order === 'desc' ? -1 : 1
-    if (a[key] < b[key]) return -1 * dir
-    if (a[key] > b[key]) return 1 * dir
-    return 0
-  })
-  const start = (page - 1) * page_size
-  const paged = sorted.slice(start, start + page_size)
-  return { ...res, page, page_size, metrics: paged }
+  try {
+    const { data } = await http.get(API_ENDPOINTS.METRICS_TABLE, { 
+      params: { page, page_size, sort_by, sort_order } 
+    })
+    return data
+  } catch (error) {
+    handleApiError(error, 'Fetch metrics list')
+  }
 }
 
 export async function getMetricDetail(metric_name, { start_time, interval_minutes = 60, page = 1, page_size = 24 } = {}) {
-  // const { data } = await http.get(`/api/v1/metrics/${metric_name}`, { params: { start_time, interval_minutes, page, page_size } })
-  await new Promise((r) => setTimeout(r, 300))
-  const base = histogramResponse(page_size)
-  return { metric_name, ...base }
+  try {
+    const { data } = await http.get(`${API_ENDPOINTS.METRIC_DETAIL}/${metric_name}`, { 
+      params: { start_time, interval_minutes, page, page_size } 
+    })
+    return data
+  } catch (error) {
+    handleApiError(error, 'Fetch metric detail')
+  }
 }
 
 

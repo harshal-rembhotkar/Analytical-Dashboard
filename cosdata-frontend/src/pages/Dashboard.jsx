@@ -83,7 +83,7 @@ export default function Dashboard() {
         {errorSummary && <div className="text-sm text-red-600">Failed to load summary.</div>}
         <MetricCard title="Total MTS" value={currentTotal.toLocaleString()} delta={totalChange} subtitle={`Prev: ${prevTotal.toLocaleString()}`} />
         <MetricCard title="Avg MTS/hr" value={currentAvg.toLocaleString()} delta={percentChange} subtitle={`Prev: ${prevAvg.toLocaleString()}`} />
-        {summary?.slice(0,2).map((m) => (
+        {summary && Array.isArray(summary) && summary.slice(0,2).map((m) => (
           <MetricCard key={m.title} title={m.title} value={m.value} delta={m.delta} subtitle={m.subtitle} />
         ))}
       </div>
