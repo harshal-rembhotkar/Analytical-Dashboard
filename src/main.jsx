@@ -9,6 +9,7 @@ import Metrics from './pages/Metrics.jsx'
 import MetricDetail from './pages/MetricDetail.jsx'
 import NotFound from './pages/NotFound.jsx'
 import RouteError from './pages/RouteError.jsx'
+import CompareMetrics from "./pages/CompareMetrics.jsx"
 
 const queryClient = new QueryClient()
 
@@ -21,6 +22,7 @@ const router = createBrowserRouter([
       { index: true, element: <Dashboard /> },
       { path: 'metrics', element: <Metrics /> },
       { path: 'metrics/:metric', element: <MetricDetail /> },
+      { path: 'compare-metrics/:metrics', element: <CompareMetrics /> },
       { path: '*', element: <NotFound /> },
     ],
   },

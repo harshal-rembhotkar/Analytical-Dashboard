@@ -4,8 +4,10 @@ import DataTable from '../components/DataTable'
 import { getMetricsList } from '../services/api'
 import { Link } from 'react-router-dom'
 
+const collection_name = "observability_metrics_dim_20_card_4";
+
 export default function Metrics() {
-  const [page, setPage] = useState(1)
+  const [page, setPage] = useState(0)
   const [pageSize, setPageSize] = useState(10)
   const [sortBy, setSortBy] = useState('name')
   const [sortOrder, setSortOrder] = useState('asc')
@@ -13,7 +15,7 @@ export default function Metrics() {
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ['metrics', page, pageSize, sortBy, sortOrder],
-    queryFn: () => getMetricsList({ page, page_size: pageSize, sort_by: sortBy, sort_order: sortOrder }),
+    queryFn: () => getMetricsList(collection_name, { page, page_size: pageSize, sort_by: sortBy, sort_order: sortOrder }),
     keepPreviousData: true,
   })
 
@@ -34,7 +36,9 @@ export default function Metrics() {
         <select value={sortBy} onChange={(e) => setSortBy(e.target.value)} className="input-modern">
           <option value="name">Sort: Name</option>
           <option value="mts_count">Sort: MTS</option>
-          <option value="percentage">Sort: % of total</option>
+          <option value="datapoint_count">Sort: Datapoint</option>
+          <option value="mts_percentage">Sort: % of total (MTS)</option>
+          <option value="datapoint_percentage">Sort: % of total (Datapoint)</option>
         </select>
         <select value={sortOrder} onChange={(e) => setSortOrder(e.target.value)} className="input-modern">
           <option value="asc">Asc</option>
@@ -51,18 +55,20 @@ export default function Metrics() {
         isLoading={isLoading}
         isError={isError}
         columns={[
-          { key: 'metric_name', header: 'Metric name', cell: (r) => <Link className="text-blue-600" to={`/metrics/${encodeURIComponent(r.metric_name)}`}>{r.metric_name}</Link> },
-          { key: 'utilization', header: 'Utilization', cell: (r) => r.utilization.join(', ') },
-          { key: 'mts_count', header: 'Metric time series (MTS)' },
-          { key: 'percentage_of_total', header: 'Percentage over total', cell: (r) => `${(r.percentage_of_total * 100).toFixed(2)}%` },
+            { key: 'metric_name', header: 'Metric name', cell: (r) => <Link className="text-blue-600" to={`/metrics/${encodeURIComponent(r.metric_name)}`}>{r.metric_name}</Link> },
+            { key: 'utilization', header: 'Utilization', cell: (r) => r.utilization.join(', ') },
+            { key: 'mts_count', header: 'Metric time series (MTS)' },
+            { key: 'datapoint_count', header: 'Datapoints' },
+            { key: 'mts_percentage_of_total', header: 'Percentage over total (MTS)', cell: (r) => `${(r.mts_percentage_of_total).toFixed(2)}%` },
+            { key: 'datapoint_percentage_of_total', header: 'Percentage over total (Datapoints)', cell: (r) => `${(r.datapoint_percentage_of_total).toFixed(2)}%` },
         ]}
         data={filtered}
       />
 
       <div className="flex items-center gap-2 justify-end">
-        <button disabled={page === 1} onClick={() => setPage((p) => p - 1)} className="btn-secondary disabled:opacity-50">Prev</button>
-        <span className="text-sm">Page {page} / {totalPages}</span>
-        <button disabled={page >= totalPages} onClick={() => setPage((p) => p + 1)} className="btn-secondary disabled:opacity-50">Next</button>
+        <button disabled={page === 0} onClick={() => setPage((p) => p - 1)} className="btn-secondary disabled:opacity-50">Prev</button>
+        <span className="text-sm">Page {page + 1} / {totalPages}</span>
+        <button disabled={page >= totalPages - 1} onClick={() => setPage((p) => p + 1)} className="btn-secondary disabled:opacity-50">Next</button>
       </div>
     </div>
   )
