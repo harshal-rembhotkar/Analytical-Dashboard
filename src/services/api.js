@@ -124,9 +124,12 @@ export async function getMetricsList(
   { page = 0, page_size = 10, sort_by = "name", sort_order = "asc" } = {},
 ) {
   try {
-    const { data } = await http.get(API_ENDPOINTS.metrics_list(collection_name), {
-      params: { page, page_size, sort_by, sort_order },
-    });
+    const { data } = await http.get(
+      API_ENDPOINTS.metrics_list(collection_name),
+      {
+        params: { page, page_size, sort_by, sort_order },
+      },
+    );
     return data;
   } catch (error) {
     handleApiError(error, "Fetch metrics list");
@@ -154,7 +157,12 @@ export async function getMetricDetail(
     const { data } = await http.get(
       API_ENDPOINTS.metric_histogram(collection_name, metric_name),
       {
-        params: { start_time: start_time.toISOString(), interval_minutes, page, page_size },
+        params: {
+          start_time: start_time.toISOString(),
+          interval_minutes,
+          page,
+          page_size,
+        },
       },
     );
     // converting string timestamps to `Date` objects
