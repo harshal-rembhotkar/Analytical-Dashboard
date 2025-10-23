@@ -1,7 +1,7 @@
-import { NavLink, Outlet } from 'react-router-dom'
-import './App.css'
-import Sidebar from './components/Sidebar'
-import Topbar from './components/Topbar'
+import { Outlet } from "react-router-dom";
+import "./App.css";
+import Sidebar from "./components/Sidebar";
+import Topbar from "./components/Topbar";
 
 function App() {
   return (
@@ -16,7 +16,7 @@ function App() {
         </main>
       </div>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
