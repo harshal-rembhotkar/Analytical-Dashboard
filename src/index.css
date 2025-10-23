@@ -3,28 +3,45 @@
 /* Semantic palette (hex values to avoid theme() resolution issues) */
 /* Ocean Breeze (light-first): soothing blues/teals with white surfaces */
 :root {
-  --bg: #f8fbff;            /* very light blue-tinted background */
-  --card: #ffffff;          /* white surfaces */
-  --text: #0f172a;          /* slate-900 */
-  --text-muted: #475569;    /* slate-600 */
-  --accent: #14b8a6;        /* teal-500 */
-  --accent-light: #ccfbf1;  /* teal-100 */
-  --accent-2: #3b82f6;      /* blue-500 */
-  --border: #e2e8f0;        /* slate-200 */
+  --bg: #f8fbff;
+  /* very light blue-tinted background */
+  --card: #ffffff;
+  /* white surfaces */
+  --text: #0f172a;
+  /* slate-900 */
+  --text-muted: #475569;
+  /* slate-600 */
+  --accent: #14b8a6;
+  /* teal-500 */
+  --accent-light: #ccfbf1;
+  /* teal-100 */
+  --accent-2: #3b82f6;
+  /* blue-500 */
+  --border: #e2e8f0;
+  /* slate-200 */
 }
 
 .dark {
   color-scheme: dark;
-  --bg: #0b1220;            /* deep navy */
-  --card: #131a2a;          /* elevated surface */
-  --text: #e6f1ff;          /* primary text */
-  --text-muted: #7a8ca8;    /* secondary text */
-  --accent: #14b8a6;        /* teal */
-  --accent-light: #0f766e33;/* translucent teal */
-  --border: #233045;        /* subtle border */
+  --bg: #0b1220;
+  /* deep navy */
+  --card: #131a2a;
+  /* elevated surface */
+  --text: #e6f1ff;
+  /* primary text */
+  --text-muted: #7a8ca8;
+  /* secondary text */
+  --accent: #14b8a6;
+  /* teal */
+  --accent-light: #0f766e33;
+  /* translucent teal */
+  --border: #233045;
+  /* subtle border */
 }
 
-html, body, #root {
+html,
+body,
+#root {
   height: 100%;
 }
 
@@ -60,7 +77,7 @@ body {
   @apply px-3 py-2 rounded-lg border border-[var(--border)] bg-[var(--card)] text-[var(--text)] placeholder-[var(--text-muted)] focus:ring-2 focus:ring-[var(--accent)] focus:border-transparent outline-none transition-all;
 }
 
-/* Container utility similar to CosData */
-.container-cos {
+/* Container utility similar to Oodl */
+.container-oodl {
   @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
 }

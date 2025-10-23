@@ -12,7 +12,7 @@ export default function RouteError() {
     detail = error.message;
   }
   return (
-    <div className="container-cos py-12">
+    <div className="container-oodl py-12">
       <div className="rounded-lg border border-red-300 bg-red-50 dark:bg-red-950/30 dark:border-red-900 p-8">
         <h1 className="text-xl font-semibold mb-2">{title}</h1>
         {detail && (

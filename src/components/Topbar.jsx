@@ -19,7 +19,7 @@ export default function Topbar() {
 
   return (
     <header className="h-16 border-b border-[var(--border)] bg-[var(--card)] flex items-center shadow-sm">
-      <div className="container-cos w-full flex items-center gap-4">
+      <div className="container-oodl w-full flex items-center gap-4">
         <div className="flex-1">
           <input
             placeholder="Search metrics, services..."

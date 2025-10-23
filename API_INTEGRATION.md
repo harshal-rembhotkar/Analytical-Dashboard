@@ -55,7 +55,7 @@ The frontend expects the following API endpoints to be implemented:
 
 ### Environment Variables
 
-Create a `.env` file in the `cosdata-frontend` directory:
+Create a `.env` file:
 
 ```env
 # API Configuration

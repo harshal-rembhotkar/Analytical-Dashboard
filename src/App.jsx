@@ -10,7 +10,7 @@ function App() {
       <div className="flex-1 flex flex-col min-w-0">
         <Topbar />
         <main className="flex-1 overflow-y-auto">
-          <div className="container-cos py-6">
+          <div className="container-oodl py-6">
             <Outlet />
           </div>
         </main>
